@@ -1,0 +1,59 @@
+<div class="container">
+    <button (click)="openModal()">Add User</button>
+  
+    <div *ngIf="isModalOpen" class="modal">
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
+        <h3>{{ isUpdate ? 'Update' : 'Add' }} User</h3>
+  
+        <div>
+          <label for="name">Name</label>
+          <input id="name" type="text" formControlName="name">
+        </div>
+  
+        <div>
+          <label for="email">Email</label>
+          <input id="email" type="text" formControlName="email">
+        </div>
+  
+        <div>
+          <label for="mobile">Mobile</label>
+          <input id="mobile" type="text" formControlName="mobile">
+        </div>
+  
+        <div>
+          <button type="submit" [disabled]="userForm.invalid">
+            {{ isUpdate ? 'Update' : 'Create' }}
+          </button>
+          <button type="button" (click)="closeModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  
+    <h1>Users List</h1>
+    <table border="1" cellspacing="0" cellpadding="8">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Mobile</th>
+          <th>Created At</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.mobile }}</td>
+          <td>{{ user.createdAt | date: 'short' }}</td>
+          <td>
+            <button (click)="openModal(user)">Edit</button>
+            <button (click)="deleteUser(user.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
